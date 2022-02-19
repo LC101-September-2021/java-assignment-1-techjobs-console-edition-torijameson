@@ -14,7 +14,7 @@ import java.util.*;
  */
 public class JobData {
 
-    private static final String DATA_FILE = "resources/job_data.csv";
+    private static final String DATA_FILE = "src/main/resources/job_data.csv";
     private static Boolean isDataLoaded = false;
 
     private static ArrayList<HashMap<String, String>> allJobs;
@@ -44,7 +44,7 @@ public class JobData {
         return values;
     }
 
-    // TODO *** case insensitivity goes here somewhere. Method should be str.equalsIgnoreCase() or ToIgnoreCase()
+    // *** case insensitivity goes here somewhere. Method should be str.equalsIgnoreCase() or ToIgnoreCase()
     // use a do-while loop ? put the code in the do and while for the making things case-ignorable?
     // do { codeblock } while (ignoringcases);
     public static ArrayList<HashMap<String, String>> findAll() {
