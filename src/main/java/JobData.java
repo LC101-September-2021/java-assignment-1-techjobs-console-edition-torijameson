@@ -1,3 +1,5 @@
+//package org.launchcode.techjobs.console;
+
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
@@ -5,18 +7,15 @@ import org.apache.commons.csv.CSVRecord;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by LaunchCode
  */
 public class JobData {
 
-    private static final String DATA_FILE = "src/main/resources/job_data.csv";
-    private static boolean isDataLoaded = false;
+    private static final String DATA_FILE = "resources/job_data.csv";
+    private static Boolean isDataLoaded = false;
 
     private static ArrayList<HashMap<String, String>> allJobs;
 
@@ -42,30 +41,29 @@ public class JobData {
             }
         }
 
-        // Bonus mission: sort the results
-        Collections.sort(values);
-
         return values;
     }
 
+    // TODO *** case insensitivity goes here somewhere. Method should be str.equalsIgnoreCase() or ToIgnoreCase()
+    // use a do-while loop ? put the code in the do and while for the making things case-ignorable?
+    // do { codeblock } while (ignoringcases);
     public static ArrayList<HashMap<String, String>> findAll() {
 
         // load data, if not already loaded
         loadData();
 
-        // Bonus mission; normal version returns allJobs
         return new ArrayList<>(allJobs);
     }
 
     /**
      * Returns results of search the jobs data by key/value, using
      * inclusion of the search term.
-     *
+     * <p>
      * For example, searching for employer "Enterprise" will include results
      * with "Enterprise Holdings, Inc".
      *
-     * @param column   Column that should be searched.
-     * @param value Value of teh field to search for
+     * @param column Column that should be searched.
+     * @param value  Value of teh field to search for
      * @return List of all jobs matching the criteria
      */
     public static ArrayList<HashMap<String, String>> findByColumnAndValue(String column, String value) {
@@ -85,21 +83,6 @@ public class JobData {
         }
 
         return jobs;
-    }
-
-    /**
-     * Search all columns for the given term
-     *
-     * @param value The search term to look for
-     * @return      List of all jobs with at least one field containing the value
-     */
-    public static ArrayList<HashMap<String, String>> findByValue(String value) {
-
-        // load data, if not already loaded
-        loadData();
-
-        // TODO - implement this method
-        return null;
     }
 
     /**
@@ -143,4 +126,26 @@ public class JobData {
         }
     }
 
+
+    public static ArrayList<HashMap <String, String>> findByValue(String value) {
+        loadData();
+
+        ArrayList<HashMap<String, String>> valueJobs = new ArrayList<>();
+
+        for (HashMap<String, String> row : allJobs) {
+            for (Map.Entry<String, String> entry: row.entrySet()){
+                String aValue = entry.getValue().toLowerCase();
+
+                if (aValue.contains(value)) {
+                    if(!valueJobs.contains(row)){
+                        valueJobs.add(row);
+                    }
+            }
+
+            }
+        }
+        return valueJobs;
+    }
 }
+
+
